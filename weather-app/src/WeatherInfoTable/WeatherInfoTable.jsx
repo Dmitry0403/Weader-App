@@ -17,10 +17,10 @@ export function WeatherInfoTable(props) {
         </thead>
         <tbody>
           <tr>
-            <td>{data.main.temp}</td>
-            <td>{data.main.feels_like}</td>
-            <td>{data.main.pressure}</td>
-            <td>{data.main.humidity}</td>
+            <td>{data.temp}</td>
+            <td>{data.feels_like}</td>
+            <td>{data.pressure}</td>
+            <td>{data.humidity}</td>
           </tr>
         </tbody>
       </table>
