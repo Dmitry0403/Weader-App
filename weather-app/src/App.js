@@ -27,8 +27,8 @@ export class App extends React.Component {
         }
         throw new Error("ошибка");
       })
-      .then(({ data }) => {
-        this.setState({ data });
+      .then((data) => {
+        this.setState({ data: data.main });
       })
       .catch(() => {
         this.setState({ isError: true });
@@ -44,7 +44,7 @@ export class App extends React.Component {
     this.getData();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(_, prevProps) {
     if (this.state.value === prevProps.value) {
       return;
     }
