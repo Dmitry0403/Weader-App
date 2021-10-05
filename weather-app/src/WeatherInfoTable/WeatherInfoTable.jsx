@@ -1,12 +1,17 @@
-import React from "react";
 import css from "./styles.module.css";
 
 export function WeatherInfoTable(props) {
   const data = props.data;
+  const value = props.value;
+  if (!value) {
+    return <div>Введите название города</div>;
+  }
   return (
     <div>
       <table className={css.infoTable}>
-        <caption>Метеопоказания в городе {props.value}</caption>
+        <caption>
+          Метеопоказания в городе {value[0].toUpperCase() + value.slice(1)}
+        </caption>
         <thead>
           <tr>
             <th scope="col">температура</th>
