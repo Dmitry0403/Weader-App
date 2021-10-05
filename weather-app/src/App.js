@@ -19,7 +19,13 @@ export class App extends React.Component {
     const AppKey = process.env.REACT_APP_OPEN_WEATHER_TOKEN;
     const value = this.state.value;
     const selectedUnit = this.state.selectedUnit;
-    const url = `https://api.openweathermap.org/data/2.5/weather?appid=${AppKey}&q=${value}&units=${selectedUnit}`;
+    const searchParams = new URLSearchParams({
+      appid: AppKey,
+      q: value,
+      units: selectedUnit,
+    }).toString();
+
+    const url = `https://api.openweathermap.org/data/2.5/weather?${searchParams}`;
     this.setState({
       isLoading: true,
     });
@@ -50,10 +56,10 @@ export class App extends React.Component {
     this.getData();
   }
 
-  componentDidUpdate(_, prevProps) {
-    if (this.state.value !== prevProps.value) {
+  componentDidUpdate(_, prevState) {
+    if (this.state.value !== prevState.value) {
       this.getDataDebounced();
-    } else if (this.state.selectedUnit !== prevProps.selectedUnit) {
+    } else if (this.state.selectedUnit !== prevState.selectedUnit) {
       this.getData();
     } else return;
   }
