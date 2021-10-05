@@ -1,34 +1,50 @@
+import React from "react";
 import css from "./styles.module.css";
 
-export function Dropdown(props) {
-  const isFilter = props.isFilter;
-  return (
-    <div>
-      <div className={css.filterList}>
-        <legend>единицы измерения:</legend>
-        <input type="checkbox" onChange={props.onChange} />
-      </div>
-      {isFilter && (
-        <div>
-          <Filter onSelect={props.onSelect} selected={props.selected} />
+export class Dropdown extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showFilter: false,
+    };
+  }
+
+  handleFilterChange = () => {
+    this.setState((prevState) => ({
+      showFilter: !prevState.showFilter,
+    }));
+  };
+
+  render() {
+    const { showFilter } = this.state;
+    return (
+      <div>
+        <div className={css.filterList}>
+          <legend>единицы измерения:</legend>
+          <input type="checkbox" onChange={this.handleFilterChange} />
         </div>
-      )}
-    </div>
-  );
+        {showFilter && (
+          <div>
+            <Filter
+              onSelect={this.props.onSelect}
+              selectedUnit={this.props.selectedUnit}
+            />
+          </div>
+        )}
+      </div>
+    );
+  }
 }
 
 function Filter(props) {
-    return (
-      <select onChange={props.onSelect}>
-        <option value="metric" selected={props.selected === "metric"}>
-          metric
+  const units = ["metric", "standart", "imperial"];
+  return (
+    <select onChange={props.onSelect}>
+      {units.map((item) => (
+        <option value={item} selected={props.selectedUnit === item}>
+          {item}
         </option>
-        <option value="standard" selected={props.selected === "standard"}>
-          standard
-        </option>
-        <option value="imperial" selected={props.selected === "imperial"}>
-          imperial
-        </option>
-      </select>
-    );
-  }
+      ))}
+    </select>
+  );
+}
