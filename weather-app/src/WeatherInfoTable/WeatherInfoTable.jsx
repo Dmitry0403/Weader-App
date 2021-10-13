@@ -1,8 +1,10 @@
 import css from "./styles.module.css";
 
 export function WeatherInfoTable(props) {
-  const data = props.data;
-  const value = props.value;
+  const { data, value } = props;
+  const titles = ["температура", "ощущается", "давление, гПа", "влажность, %"];
+  const dataItems = ["temp", "feels_like", "pressure", "humidity"];
+
   if (!value) {
     return <div>Введите название города</div>;
   }
@@ -14,18 +16,18 @@ export function WeatherInfoTable(props) {
         </caption>
         <thead>
           <tr>
-            <th scope="col">температура</th>
-            <th scope="col">температура ощущается</th>
-            <th scope="col">давление</th>
-            <th scope="col">влажность</th>
+            {titles.map((item) => (
+              <th scope="col" key={item}>
+                {item}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>{data.temp}</td>
-            <td>{data.feels_like}</td>
-            <td>{data.pressure}</td>
-            <td>{data.humidity}</td>
+            {dataItems.map((item) => (
+              <td key={item}>{data[item]}</td>
+            ))}
           </tr>
         </tbody>
       </table>

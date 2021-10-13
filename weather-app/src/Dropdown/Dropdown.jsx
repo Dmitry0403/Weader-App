@@ -1,48 +1,34 @@
 import React from "react";
 import css from "./styles.module.css";
 
-export class Dropdown extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showFilter: false,
-    };
-  }
-
-  handleFilterChange = () => {
-    this.setState((prevState) => ({
-      showFilter: !prevState.showFilter,
-    }));
-  };
-
-  render() {
-    const { showFilter } = this.state;
-    return (
-      <div>
-        <div className={css.filterList}>
-          <legend>единицы измерения:</legend>
-          <input type="checkbox" onChange={this.handleFilterChange} />
-        </div>
-        {showFilter && (
-          <div>
-            <Filter
-              onSelect={this.props.onSelect}
-              selectedUnit={this.props.selectedUnit}
-            />
-          </div>
-        )}
+export const Dropdown = (props) => {
+  return (
+    <div>
+      <div className={css.filterList}>
+        <legend>единицы измерения температуры:</legend>
       </div>
-    );
-  }
-}
+      <div>
+        <Filter onSelect={props.onSelect} selectedUnit={props.selectedUnit} />
+      </div>
+    </div>
+  );
+};
 
 function Filter(props) {
-  const units = ["metric", "standart", "imperial"];
+  const units = [
+    { metric: "Celsius" },
+    { standart: "Kelvin" },
+    { imperial: "Fahrenheit" },
+  ];
   return (
-    <select onChange={props.onSelect}>
+    <select className={css.select} onChange={props.onSelect}>
       {units.map((item) => (
-        <option value={item} selected={props.selectedUnit === item}>
-          {item}
+        <option
+          key={Object.keys(item)}
+          value={Object.keys(item)}
+          selected={props.selectedUnit === Object.keys(item)}
+        >
+          {Object.values(item)}
         </option>
       ))}
     </select>
