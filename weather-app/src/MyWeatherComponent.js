@@ -5,7 +5,7 @@ import { debounce } from "lodash";
 import { WeatherInfoTable } from "./WeatherInfoTable/WeatherInfoTable";
 import { Dropdown } from "./Dropdown/Dropdown";
 
-const withFetch = (Component) => {
+const withFetch = (Component, baseUrl) => {
   return class extends React.Component {
     state = {
       isLoading: false,
@@ -14,7 +14,16 @@ const withFetch = (Component) => {
       data: [],
     };
 
-    fetchData = async (url) => {
+    fetchData = async (AppKey, value, selectedUnit) => {
+      
+      const searchParams = new URLSearchParams({
+        appid: AppKey,
+        q: value,
+        units: selectedUnit,
+      }).toString();
+      
+      const url = baseUrl + searchParams;
+      
       this.setState({
         isLoading: true,
       });
@@ -62,16 +71,8 @@ class MyWeatherComponent extends React.Component {
   getData = () => {
     const AppKey = process.env.REACT_APP_OPEN_WEATHER_TOKEN;
     const { value, selectedUnit } = this.state;
-    const searchParams = new URLSearchParams({
-      appid: AppKey,
-      q: value,
-      units: selectedUnit,
-    }).toString();
-
-    const url = `https://api.openweathermap.org/data/2.5/weather?${searchParams}`;
-
     const { fetchData } = this.props;
-    fetchData(url);
+    fetchData(AppKey, value, selectedUnit);
   };
 
   componentDidMount() {
@@ -132,5 +133,8 @@ class MyWeatherComponent extends React.Component {
     );
   }
 }
-
-export const MyWeatherComponentWithFetch = withFetch(MyWeatherComponent);
+const baseUrl = `https://api.openweathermap.org/data/2.5/weather?`;
+export const MyWeatherComponentWithFetch = withFetch(
+  MyWeatherComponent,
+  baseUrl
+);
