@@ -1,10 +1,10 @@
 import ReactDOM from "react-dom";
 import { ErrorBoundary } from "./ErrorBoundary/ErrorBoundary";
-import { App } from "./App";
+import { MyWeatherComponentWithFetch } from "./MyWeatherComponent";
 
 ReactDOM.render(
   <ErrorBoundary>
-    <App />
+    <MyWeatherComponentWithFetch />
   </ErrorBoundary>,
   document.getElementById("root")
 );
