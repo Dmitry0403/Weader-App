@@ -14,19 +14,13 @@ const withFetch = (Component, baseUrl) => {
       data: [],
     };
 
-    fetchData = async (AppKey, value, selectedUnit) => {
-      
-      const searchParams = new URLSearchParams({
-        appid: AppKey,
-        q: value,
-        units: selectedUnit,
-      }).toString();
-      
+    fetchData = async (queryParams) => {
+      const searchParams = new URLSearchParams(queryParams).toString();
       const url = baseUrl + searchParams;
-      
       this.setState({
         isLoading: true,
       });
+
       fetch(url)
         .then((resp) => {
           if (resp.ok) {
@@ -72,7 +66,8 @@ class MyWeatherComponent extends React.Component {
     const AppKey = process.env.REACT_APP_OPEN_WEATHER_TOKEN;
     const { value, selectedUnit } = this.state;
     const { fetchData } = this.props;
-    fetchData(AppKey, value, selectedUnit);
+    const queryParams = { appid: AppKey, q: value, units: selectedUnit };
+    fetchData(queryParams);
   };
 
   componentDidMount() {
