@@ -10,9 +10,6 @@ html {
 
 body {
   max-width: 1200px;
-  margin: 0 auto;
-
-  white-space: nowrap;
 
   color: #e2e6ec;
   background: url(./lightning.jpg);
