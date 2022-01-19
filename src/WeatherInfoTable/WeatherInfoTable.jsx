@@ -2,9 +2,6 @@ import css from "./styles.module.css";
 
 export function WeatherInfoTable(props) {
   const { data, value } = props;
-  // const titles = ["температура", "ощущается", "давление, гПа", "влажность, %"];
-  // const dataItems = ["temp", "feels_like", "pressure", "humidity"];
-
   const dataItems = [
     { title: "температура", dataItem: "temp" },
     { title: "ощущается", dataItem: "feels_like" },
